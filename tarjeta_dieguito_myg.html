@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dieguito - M&G | Tarjeta de Presentación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0d0d1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Partículas de fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(147, 51, 234, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Tarjeta principal */
+        .card-container {
+            position: relative;
+            z-index: 1;
+            perspective: 1000px;
+        }
+
+        .business-card {
+            width: 420px;
+            background: linear-gradient(145deg, rgba(20, 20, 35, 0.95), rgba(10, 10, 20, 0.98));
+            border-radius: 24px;
+            padding: 40px 35px;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(147, 51, 234, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            animation: cardEntry 1s ease-out;
+        }
+
+        @keyframes cardEntry {
+            0% { transform: translateY(50px) rotateX(15deg); opacity: 0; }
+            100% { transform: translateY(0) rotateX(0deg); opacity: 1; }
+        }
+
+        /* Efecto de brillo en borde */
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #9333ea, #ec4899, #8b5cf6, #9333ea);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s;
+            filter: blur(8px);
+        }
+
+        .business-card:hover::before {
+            opacity: 0.5;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { filter: blur(8px) hue-rotate(0deg); }
+            100% { filter: blur(8px) hue-rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #9333ea, #ec4899);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 36px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(147, 51, 234, 0.6); }
+        }
+
+        .business-name {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, #d8b4fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: #a855f7;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Separador */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.5), transparent);
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::after {
+            content: '◆';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #9333ea;
+            font-size: 10px;
+            background: #141423;
+            padding: 0 10px;
+        }
+
+        /* Servicios */
+        .services-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            color: #9333ea;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .service-item {
+            background: rgba(147, 51, 234, 0.08);
+            border: 1px solid rgba(147, 51, 234, 0.15);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: #e9d5ff;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .service-item:hover {
+            background: rgba(147, 51, 234, 0.2);
+            border-color: rgba(147, 51, 234, 0.4);
+            transform: translateX(3px);
+        }
+
+        .service-item i {
+            color: #a855f7;
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .service-item.more {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.1));
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #f0abfc;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Contacto */
+        .contact-section {
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: #d8b4fe;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .contact-item i {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.1));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a855f7;
+            font-size: 13px;
+            border: 1px solid rgba(147, 51, 234, 0.2);
+        }
+
+        .phone-numbers {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .phone-numbers a {
+            color: #d8b4fe;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .phone-numbers a:hover {
+            color: #fff;
+        }
+
+        /* Botones de acción */
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #9333ea, #ec4899);
+            color: white;
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(147, 51, 234, 0.1);
+            color: #d8b4fe;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(147, 51, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* QR Code placeholder area */
+        .qr-section {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            background: rgba(147, 51, 234, 0.05);
+            border-radius: 12px;
+            border: 1px dashed rgba(147, 51, 234, 0.2);
+        }
+
+        .qr-placeholder {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.05));
+            border-radius: 12px;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9333ea;
+            font-size: 36px;
+        }
+
+        .qr-text {
+            font-size: 10px;
+            color: #a855f7;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+            color: rgba(168, 85, 247, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .business-card {
+                width: 100%;
+                padding: 30px 20px;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .business-name {
+                font-size: 26px;
+            }
+        }
+
+        /* Efecto de escaneo */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #9333ea, transparent);
+            opacity: 0.5;
+            animation: scan 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { top: 100%; opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Partículas de fondo -->
+    <div class="particles" id="particles"></div>
+
+    <div class="card-container">
+        <div class="business-card">
+            <div class="scan-line"></div>
+
+            <!-- Header -->
+            <div class="header">
+                <div class="logo-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="business-name">Dieguito - M&G</div>
+                <div class="tagline">Soluciones Tecnológicas</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Servicios -->
+            <div class="services-section">
+                <div class="section-title">
+                    <i class="fas fa-bolt"></i> Servicios
+                </div>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <i class="fas fa-download"></i>
+                        <span>Instalación de Programas</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Páginas Web</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-book-open"></i>
+                        <span>Catálogos Digitales</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-code"></i>
+                        <span>Programación</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>Compra de Dominios</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-file-powerpoint"></i>
+                        <span>Presentaciones PPT</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>Diseño Gráfico</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Seguridad Informática</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-tools"></i>
+                        <span>Mantenimiento PC</span>
+                    </div>
+                    <div class="service-item more">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>¡Y mucho más!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Contacto -->
+            <div class="contact-section">
+                <div class="section-title">
+                    <i class="fas fa-address-card"></i> Contacto
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div class="phone-numbers">
+                        <a href="tel:+51928285923">928 285 923</a>
+                        <a href="tel:+51935742490">935 742 490</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Pasaje Belarde 147 - UNI - S.M.P.</span>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="actions">
+                <a href="tel:+51928285923" class="btn btn-primary">
+                    <i class="fas fa-phone"></i> Llamar
+                </a>
+                <a href="https://wa.me/51928285923" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+
+            <!-- QR -->
+            <div class="qr-section">
+                <div class="qr-placeholder">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <div class="qr-text">ESCANEA PARA GUARDAR CONTACTO</div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                DIEGUITO - M&G © 2026
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generar partículas
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particle.style.width = (2 + Math.random() * 4) + 'px';
+            particle.style.height = particle.style.width;
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
