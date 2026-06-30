@@ -1,2 +1,0 @@
-# ktqsis
-Mi presentación
